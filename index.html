@@ -293,7 +293,7 @@
 
     .exercise-top {
       display: grid;
-      grid-template-columns: 34px 1fr;
+      grid-template-columns: 90px 1fr;
       gap: 8px;
       align-items: start;
       padding: 12px;
@@ -304,6 +304,17 @@
       height: 24px;
       margin: 1px 0 0;
       accent-color: var(--accent);
+    }
+
+    .round-checks {
+      display: grid;
+      grid-template-columns: repeat(3, 24px);
+      gap: 6px;
+      align-items: start;
+    }
+
+    .round-checks[data-rounds="2"] {
+      grid-template-columns: repeat(2, 24px);
     }
 
     .exercise-title {
@@ -322,7 +333,7 @@
     .videos {
       display: grid;
       gap: 8px;
-      padding: 0 12px 12px 54px;
+      padding: 0 12px 12px 110px;
     }
 
     .video-toggle {
@@ -633,6 +644,44 @@
       });
     };
 
+    const getRoundCountForList = (list) => {
+      let node = list.previousElementSibling;
+      while (node && node.tagName !== "H3") {
+        const text = node.textContent || "";
+        if (text.includes("2 voltas")) return 2;
+        if (text.includes("3 voltas")) return 3;
+        node = node.previousElementSibling;
+      }
+
+      const heading = node?.textContent || "";
+      return heading.includes("3 voltas") ? 3 : 2;
+    };
+
+    const buildRoundCheckboxes = () => {
+      document.querySelectorAll(".exercise-list").forEach((list) => {
+        const rounds = getRoundCountForList(list);
+
+        list.querySelectorAll(".exercise").forEach((exercise) => {
+          const firstCheckbox = exercise.querySelector(".exercise-top > input[type='checkbox']");
+          const title = exercise.querySelector(".exercise-title")?.textContent || "exercício";
+          if (!firstCheckbox) return;
+
+          const group = document.createElement("div");
+          group.className = "round-checks";
+          group.dataset.rounds = String(rounds);
+
+          for (let round = 1; round <= rounds; round += 1) {
+            const checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.setAttribute("aria-label", `${title}, volta ${round}`);
+            group.append(checkbox);
+          }
+
+          firstCheckbox.replaceWith(group);
+        });
+      });
+    };
+
     const storage = {
       get(key, fallback) {
         try {
@@ -737,6 +786,7 @@
     };
 
     buildVideoControls();
+    buildRoundCheckboxes();
     initTabs();
     initWeeklyTracker();
     initExercisePersistence();
