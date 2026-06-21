@@ -1,0 +1,803 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#101820" />
+  <title>Treino 3x por semana</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #101820;
+      --page-bg:
+        linear-gradient(135deg, rgba(124,207,159,0.16), transparent 32%),
+        linear-gradient(220deg, rgba(110,198,255,0.12), transparent 34%),
+        var(--bg);
+      --surface: #17232d;
+      --surface-2: #20303d;
+      --surface-3: #273946;
+      --header-bg: linear-gradient(90deg, rgba(124,207,159,0.12), rgba(255,209,102,0.08)), var(--surface);
+      --chrome-bg: rgba(16,24,32,0.9);
+      --text: #f6f7f2;
+      --muted: #b7c2c4;
+      --soft: #d7ded8;
+      --line: rgba(255,255,255,0.12);
+      --accent: #7ccf9f;
+      --accent-2: #ffd166;
+      --accent-3: #6ec6ff;
+      --danger: #ff9f9f;
+      --note-bg: rgba(255,209,102,0.12);
+      --note-border: rgba(255,209,102,0.36);
+      --note-text: #fff2c2;
+      --danger-bg: rgba(255,159,159,0.12);
+      --danger-border: rgba(255,159,159,0.34);
+      --danger-text: #ffe2e2;
+      --shadow: 0 18px 50px rgba(0,0,0,0.28);
+      --radius: 8px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Arial, sans-serif;
+      background: var(--page-bg);
+      color: var(--text);
+      line-height: 1.45;
+      -webkit-font-smoothing: antialiased;
+      padding-bottom: calc(26px + env(safe-area-inset-bottom));
+    }
+
+    a { color: inherit; }
+
+    .app-shell {
+      width: min(100%, 820px);
+      margin: 0 auto;
+      padding: 0 14px;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      margin: 0 -14px;
+      padding: calc(16px + env(safe-area-inset-top)) 14px 12px;
+      border-bottom: 1px solid var(--line);
+      background: var(--chrome-bg);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    .hero {
+      display: grid;
+      gap: 12px;
+      padding: 18px 0 12px;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 12ch;
+      font-size: 40px;
+      line-height: 0.96;
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--soft);
+      font-size: 15px;
+    }
+
+    .today {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .nav-link {
+      appearance: none;
+      display: grid;
+      min-height: 54px;
+      place-items: center;
+      gap: 2px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,0.06);
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 15px;
+      touch-action: manipulation;
+      font-family: inherit;
+      cursor: pointer;
+    }
+
+    .nav-link.is-active {
+      border-color: var(--accent);
+      background: var(--accent);
+      color: #071512;
+    }
+
+    .nav-link.is-active span { color: rgba(7,21,18,0.72); }
+
+    .nav-link span {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    main {
+      display: grid;
+      gap: 14px;
+      padding-top: 14px;
+    }
+
+    .panel,
+    .workout {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .panel { padding: 16px; }
+
+    .workout-header {
+      padding: 16px;
+      background: var(--header-bg);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .workout[hidden] { display: none; }
+
+    h2 {
+      margin: 0 0 8px;
+      font-size: 23px;
+      line-height: 1.1;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      margin: 0;
+      padding: 18px 16px 8px;
+      color: var(--accent-2);
+      font-size: 14px;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    p { margin: 0 0 10px; }
+    p:last-child { margin-bottom: 0; }
+
+    .meta {
+      display: flex;
+      gap: 7px;
+      flex-wrap: wrap;
+      margin: 10px 0 0;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 5px 10px;
+      color: var(--soft);
+      background: rgba(255,255,255,0.05);
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .note {
+      margin-top: 10px;
+      border: 1px solid var(--note-border);
+      border-radius: var(--radius);
+      padding: 12px;
+      background: var(--note-bg);
+      color: var(--note-text);
+      font-size: 14px;
+    }
+
+    .note.danger {
+      border-color: var(--danger-border);
+      background: var(--danger-bg);
+      color: var(--danger-text);
+    }
+
+    .week-panel {
+      display: grid;
+      gap: 12px;
+    }
+
+    .week-top {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .week-label {
+      margin: 2px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .week-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .week-check {
+      display: grid;
+      gap: 8px;
+      min-height: 92px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 12px;
+      background: var(--surface-2);
+      color: var(--text);
+      font-weight: 850;
+    }
+
+    .week-check input {
+      justify-self: start;
+    }
+
+    .week-check span {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 750;
+    }
+
+    .week-check:has(input:checked) {
+      border-color: var(--accent);
+      background: color-mix(in srgb, var(--accent) 18%, var(--surface-2));
+    }
+
+    .reset-week {
+      appearance: none;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 9px 11px;
+      background: var(--surface-2);
+      color: var(--soft);
+      font: inherit;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .small {
+      margin: 0;
+      padding: 0 16px 4px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .exercise-list {
+      display: grid;
+      gap: 8px;
+      padding: 8px 10px 14px;
+    }
+
+    .exercise {
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius);
+      background: var(--surface-2);
+      overflow: hidden;
+    }
+
+    .exercise-top {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      gap: 8px;
+      align-items: start;
+      padding: 12px;
+    }
+
+    input[type="checkbox"] {
+      width: 24px;
+      height: 24px;
+      margin: 1px 0 0;
+      accent-color: var(--accent);
+    }
+
+    .exercise-title {
+      font-size: 16px;
+      font-weight: 850;
+      line-height: 1.22;
+    }
+
+    .exercise-detail {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 650;
+    }
+
+    .videos {
+      display: grid;
+      gap: 8px;
+      padding: 0 12px 12px 54px;
+    }
+
+    .video-toggle {
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: var(--radius);
+      background: var(--surface-3);
+      overflow: hidden;
+    }
+
+    .video-toggle summary {
+      min-height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 12px;
+      cursor: pointer;
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 850;
+      list-style: none;
+    }
+
+    .video-toggle summary::-webkit-details-marker { display: none; }
+    .video-toggle summary::after {
+      content: "+";
+      display: grid;
+      flex: 0 0 24px;
+      width: 24px;
+      height: 24px;
+      place-items: center;
+      border-radius: 999px;
+      background: rgba(124,207,159,0.18);
+      color: var(--accent);
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    .video-toggle[open] summary::after { content: "-"; }
+
+    .embed {
+      aspect-ratio: 16 / 9;
+      background: #090d12;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .embed iframe {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .youtube-open {
+      display: block;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding: 10px 12px;
+      color: var(--accent-3);
+      background: rgba(0,0,0,0.12);
+      font-size: 13px;
+      font-weight: 850;
+      text-decoration: none;
+    }
+
+    .search-link {
+      display: inline-flex;
+      align-items: center;
+      min-height: 42px;
+      width: fit-content;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: var(--radius);
+      padding: 9px 12px;
+      background: var(--surface-3);
+      color: var(--text);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 850;
+    }
+
+    details.tip {
+      margin: 10px 10px 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,0.05);
+    }
+
+    details.tip summary {
+      padding: 12px;
+      cursor: pointer;
+      font-weight: 850;
+    }
+
+    details.tip p { padding: 0 12px 12px; color: var(--soft); }
+
+    .progress details {
+      border-top: 1px solid var(--line);
+      padding: 12px 0;
+    }
+
+    .progress details:first-of-type { border-top: 0; }
+    .progress summary { cursor: pointer; font-weight: 850; }
+    .progress p { margin-top: 8px; color: var(--soft); }
+
+    footer {
+      color: var(--muted);
+      font-size: 12px;
+      text-align: center;
+      padding: 4px 8px 16px;
+    }
+
+    @media (min-width: 700px) {
+      .app-shell { padding-inline: 20px; }
+      header { margin-inline: -20px; padding-inline: 20px; }
+      .hero {
+        grid-template-columns: 1fr 340px;
+        align-items: end;
+      }
+      h1 { font-size: 52px; }
+      .today { align-self: end; }
+      .panel, .workout { border-radius: 8px; }
+    }
+
+    @media (prefers-color-scheme: light) {
+      :root {
+        color-scheme: light;
+        --bg: #f6f8f7;
+        --page-bg:
+          linear-gradient(135deg, rgba(28,132,102,0.12), transparent 34%),
+          linear-gradient(225deg, rgba(26,115,232,0.09), transparent 34%),
+          #f6f8f7;
+        --surface: #ffffff;
+        --surface-2: #f1f5f4;
+        --surface-3: #e7f0ed;
+        --header-bg: linear-gradient(90deg, #eaf6f1, #eef4fb);
+        --chrome-bg: rgba(246,248,247,0.9);
+        --text: #172321;
+        --muted: #667571;
+        --soft: #334340;
+        --line: rgba(23,35,33,0.13);
+        --accent: #23866a;
+        --accent-2: #b66b00;
+        --accent-3: #1a73e8;
+        --note-bg: #fff6d8;
+        --note-border: #efd07b;
+        --note-text: #573f05;
+        --danger-bg: #ffe7e7;
+        --danger-border: #eba5a5;
+        --danger-text: #711f1f;
+        --shadow: 0 14px 34px rgba(29,45,43,0.12);
+      }
+      .embed { background: #dbe4e0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <header>
+      <div class="hero">
+        <div>
+          <h1>Treino 3x por semana</h1>
+          <p class="subtitle">Plano rápido, de 25 a 30 min, com vídeos dobráveis para consultar no iPhone.</p>
+        </div>
+        <nav class="today" aria-label="Navegação rápida">
+          <button class="nav-link is-active" type="button" data-tab="treino-a" aria-controls="treino-a" aria-selected="true">A <span>Base</span></button>
+          <button class="nav-link" type="button" data-tab="treino-b" aria-controls="treino-b" aria-selected="false">B <span>Pernas</span></button>
+          <button class="nav-link" type="button" data-tab="treino-c" aria-controls="treino-c" aria-selected="false">C <span>Fôlego</span></button>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="panel">
+        <h2>Como usar</h2>
+        <p>Faça um treino por dia de treino. Exemplo: segunda A, quarta B, sexta ou sábado C. No início, evite fazer os 3 dias seguidos.</p>
+        <div class="meta">
+          <span class="pill">3x por semana</span>
+          <span class="pill">25-30 min</span>
+          <span class="pill">Descanso: 60-75s</span>
+        </div>
+        <div class="note">Intensidade ideal: termine cada série sentindo que ainda conseguiria fazer 2 ou 3 repetições a mais.</div>
+        <div class="note danger">Pare se sentir dor aguda no joelho, lombar ou ombro. Fadiga muscular é normal; dor articular não.</div>
+      </section>
+
+      <section class="panel week-panel" aria-labelledby="week-title">
+        <div class="week-top">
+          <div>
+            <h2 id="week-title">Semana</h2>
+            <p class="week-label" id="week-label">Progresso salvo neste aparelho.</p>
+          </div>
+          <button class="reset-week" type="button" id="reset-week">Limpar semana</button>
+        </div>
+        <div class="week-grid">
+          <label class="week-check"><input type="checkbox" data-week-done="treino-a">Treino A <span>Base</span></label>
+          <label class="week-check"><input type="checkbox" data-week-done="treino-b">Treino B <span>Pernas</span></label>
+          <label class="week-check"><input type="checkbox" data-week-done="treino-c">Treino C <span>Fôlego</span></label>
+        </div>
+      </section>
+
+      <section id="treino-a" class="workout" data-workout-panel>
+        <div class="workout-header">
+          <h2>Treino A</h2>
+          <p>Força base corpo inteiro.</p>
+          <div class="meta"><span class="pill">Até 30 min</span><span class="pill">Pernas + costas + peito + core</span></div>
+        </div>
+
+        <h3>Aquecimento - 5 min</h3>
+        <p class="small">Faça 2 voltas.</p>
+        <div class="exercise-list">
+          <article class="exercise" data-videos="Ver vídeo|https://www.youtube.com/watch?v=Z4h17vtgH7k"><div class="exercise-top"><input type="checkbox" aria-label="Concluir Agachamento sem peso"><div><div class="exercise-title">Agachamento sem peso, curto e controlado</div><div class="exercise-detail">10 repetições</div></div></div></article>
+          <article class="exercise" data-videos="Ver vídeo|https://www.youtube.com/watch?v=wPM8icPu6H8"><div class="exercise-top"><input type="checkbox" aria-label="Concluir Ponte de glúteo"><div><div class="exercise-title">Ponte de glúteo</div><div class="exercise-detail">10 repetições</div></div></div></article>
+          <article class="exercise" data-videos="Ver vídeo|https://www.youtube.com/watch?v=7d8SbPUdHR0"><div class="exercise-top"><input type="checkbox" aria-label="Concluir Remada TRX leve"><div><div class="exercise-title">Remada TRX bem leve</div><div class="exercise-detail">10 repetições</div></div></div></article>
+          <article class="exercise" data-videos="Ver vídeo|https://www.youtube.com/watch?v=gKA5LBy7WAI"><div class="exercise-top"><input type="checkbox" aria-label="Concluir Prancha alta"><div><div class="exercise-title">Prancha alta apoiado em mesa/cadeira</div><div class="exercise-detail">20 segundos</div></div></div></article>
+        </div>
+
+        <h3>Principal - 3 voltas</h3>
+        <div class="exercise-list">
+          <article class="exercise" data-videos="Ver vídeo|https://www.youtube.com/watch?v=nfX7IFK9UNI"><div class="exercise-top"><input type="checkbox" aria-label="Concluir Goblet squat"><div><div class="exercise-title">Goblet squat com kettlebell leve</div><div class="exercise-detail">8-10 repetições</div></div></div></article>
+          <article class="exercise" data-videos="Ver vídeo|https://www.youtube.com/watch?v=7d8SbPUdHR0"><div class="exercise-top"><input type="checkbox" aria-label="Concluir Remada TRX"><div><div class="exercise-title">Remada TRX</div><div class="exercise-detail">10-12 repetições</div></div></div></article>
+          <article class="exercise" data-videos="Ver vídeo|https://www.youtube.com/watch?v=WDIpL0pjun0"><div class="exercise-top"><input type="checkbox" aria-label="Concluir Flexão inclinada"><div><div class="exercise-title">Flexão inclinada com mãos em mesa/cadeira</div><div class="exercise-detail">8-10 repetições</div></div></div></article>
+          <article class="exercise" data-videos="Kettlebell|https://www.youtube.com/watch?v=LDfnyt0Rmaw;Sandbag|https://www.youtube.com/watch?v=yf464AA_WXI"><div class="exercise-top"><input type="checkbox" aria-label="Concluir Levantamento terra"><div><div class="exercise-title">Levantamento terra com kettlebell ou sandbag</div><div class="exercise-detail">10 repetições</div></div></div></article>
+          <article class="exercise" data-videos="Ver vídeo|https://www.youtube.com/watch?v=Vdcy7VrRluA"><div class="exercise-top"><input type="checkbox" aria-label="Concluir Prancha"><div><div class="exercise-title">Prancha</div><div class="exercise-detail">20-30 segundos</div></div></div></article>
+        </div>
+      </section>
+
+      <section id="treino-b" class="workout" data-workout-panel hidden>
+        <div class="workout-header">
+          <h2>Treino B</h2>
+          <p>Pernas, glúteos e abdômen.</p>
+          <div class="meta"><span class="pill">Até 30 min</span><span class="pill">Sem impacto</span><span class="pill">Lombar segura</span></div>
+        </div>
+
+        <h3>Aquecimento - 5 min</h3>
+        <p class="small">Faça 2 voltas.</p>
+        <div class="exercise-list">
+          <article class="exercise" data-videos="Buscar vídeo|https://www.youtube.com/results?search_query=chair+squat+exercise+proper+form"><div class="exercise-top"><input type="checkbox" aria-label="Concluir Sentar e levantar"><div><div class="exercise-title">Sentar e levantar de uma cadeira</div><div class="exercise-detail">10 repetições</div></div></div></article>
+          <article class="exercise" data-videos="Ver vídeo|https://www.youtube.com/watch?v=Kdeq15AvUVU"><div class="exercise-top"><input type="checkbox" aria-label="Concluir Good morning"><div><div class="exercise-title">Good morning sem peso</div><div class="exercise-detail">10 repetições</div></div></div></article>
+          <article class="exercise" data-videos="Buscar vídeo|https://www.youtube.com/results?search_query=standing+knee+raises+exercise+proper+form"><div class="exercise-top"><input type="checkbox" aria-label="Concluir Elevação de joelhos"><div><div class="exercise-title">Elevação de joelhos lenta</div><div class="exercise-detail">20 no total</div></div></div></article>
+          <article class="exercise" data-videos="Ver vídeo|https://www.youtube.com/watch?v=Jaw7LUmEkBk"><div class="exercise-top"><input type="checkbox" aria-label="Concluir Mobilidade de quadril"><div><div class="exercise-title">Mobilidade de quadril</div><div class="exercise-detail">30 segundos</div></div></div></article>
+        </div>
+
+        <h3>Principal - 3 voltas</h3>
+        <div class="exercise-list">
+          <article class="exercise" data-videos="Sandbag|https://www.youtube.com/watch?v=qcCuCcV78X8;Kettlebell|https://www.youtube.com/watch?v=nfX7IFK9UNI"><div class="exercise-top"><input type="checkbox" aria-label="Concluir Agachamento com peso"><div><div class="exercise-title">Agachamento abraçando sandbag ou kettlebell</div><div class="exercise-detail">8-10 repetições</div></div></div></article>
+          <article class="exercise" data-videos="Ver vídeo|https://www.youtube.com/watch?v=xrPteyQLGAo"><div class="exercise-top"><input type="checkbox" aria-label="Concluir Avanço para trás"><div><div class="exercise-title">Avanço para trás sem peso ou segurando apoio</div><div class="exercise-detail">6-8 por perna</div></div></div></article>
+          <article class="exercise" data-videos="Sem peso|https://www.youtube.com/watch?v=wPM8icPu6H8;Com peso|https://www.youtube.com/watch?v=6uXoBrt_4YA"><div class="exercise-top"><input type="checkbox" aria-label="Concluir Elevação pélvica"><div><div class="exercise-title">Elevação pélvica no chão</div><div class="exercise-detail">12-15 repetições</div></div></div></article>
+          <article class="exercise" data-videos="Ver vídeo|https://www.youtube.com/watch?v=lqPrSGXfL1Q"><div class="exercise-top"><input type="checkbox" aria-label="Concluir Pallof press"><div><div class="exercise-title">Pallof press com elástico</div><div class="exercise-detail">10 por lado</div></div></div></article>
+          <article class="exercise" data-videos="Farmer carry|https://www.youtube.com/watch?v=lLAw6fUccKA;Sandbag carry|https://www.youtube.com/watch?v=eMJ4g9eQ5vs"><div class="exercise-top"><input type="checkbox" aria-label="Concluir Farmer carry"><div><div class="exercise-title">Farmer carry ou bear hug carry</div><div class="exercise-detail">30-40 segundos</div></div></div></article>
+        </div>
+        <details class="tip"><summary>Se o avanço incomodar o joelho</summary><p>Troque por step-back parcial, dando só meio passo para trás, ou por sentar e levantar da cadeira com peso leve.</p></details>
+      </section>
+
+      <section id="treino-c" class="workout" data-workout-panel hidden>
+        <div class="workout-header">
+          <h2>Treino C</h2>
+          <p>Condicionamento controlado + parte superior.</p>
+          <div class="meta"><span class="pill">25-30 min</span><span class="pill">Fôlego + tronco</span><span class="pill">Sem impacto</span></div>
+        </div>
+
+        <h3>Aquecimento - 5 min</h3>
+        <p class="small">Faça 2 voltas.</p>
+        <div class="exercise-list">
+          <article class="exercise" data-videos="Buscar vídeo|https://www.youtube.com/results?search_query=marching+in+place+exercise+proper+form"><div class="exercise-top"><input type="checkbox" aria-label="Concluir Marcha no lugar"><div><div class="exercise-title">Marcha no lugar</div><div class="exercise-detail">40 segundos</div></div></div></article>
+          <article class="exercise" data-videos="Ver vídeo|https://www.youtube.com/watch?v=ZLIfSQcFS1s"><div class="exercise-top"><input type="checkbox" aria-label="Concluir Rotação de ombros"><div><div class="exercise-title">Rotação de ombros</div><div class="exercise-detail">30 segundos</div></div></div></article>
+          <article class="exercise" data-videos="Ver vídeo|https://www.youtube.com/watch?v=Z4h17vtgH7k"><div class="exercise-top"><input type="checkbox" aria-label="Concluir Agachamento sem peso"><div><div class="exercise-title">Agachamento sem peso</div><div class="exercise-detail">10 repetições</div></div></div></article>
+          <article class="exercise" data-videos="Ver vídeo|https://www.youtube.com/watch?v=7d8SbPUdHR0"><div class="exercise-top"><input type="checkbox" aria-label="Concluir Remada TRX leve"><div><div class="exercise-title">Remada TRX leve</div><div class="exercise-detail">10 repetições</div></div></div></article>
+        </div>
+
+        <h3>Circuito - 3 voltas</h3>
+        <p class="small">35 segundos de exercício + 25 segundos de descanso. Descanse 60-90 segundos entre voltas.</p>
+        <div class="exercise-list">
+          <article class="exercise" data-videos="Ver vídeo|https://www.youtube.com/watch?v=LDfnyt0Rmaw"><div class="exercise-top"><input type="checkbox" aria-label="Concluir Levantamento terra"><div><div class="exercise-title">Levantamento terra com kettlebell</div><div class="exercise-detail">35 segundos</div></div></div></article>
+          <article class="exercise" data-videos="Ver vídeo|https://www.youtube.com/watch?v=7d8SbPUdHR0"><div class="exercise-top"><input type="checkbox" aria-label="Concluir Remada TRX"><div><div class="exercise-title">Remada TRX</div><div class="exercise-detail">35 segundos</div></div></div></article>
+          <article class="exercise" data-videos="Ver vídeo|https://www.youtube.com/watch?v=0rLjkQweIDg"><div class="exercise-top"><input type="checkbox" aria-label="Concluir Desenvolvimento de ombros"><div><div class="exercise-title">Desenvolvimento de ombros com elástico</div><div class="exercise-detail">35 segundos</div></div></div></article>
+          <article class="exercise" data-videos="Sem peso|https://www.youtube.com/watch?v=Z4h17vtgH7k;Com kettlebell|https://www.youtube.com/watch?v=nfX7IFK9UNI"><div class="exercise-top"><input type="checkbox" aria-label="Concluir Agachamento"><div><div class="exercise-title">Agachamento sem peso ou com kettlebell leve</div><div class="exercise-detail">35 segundos</div></div></div></article>
+          <article class="exercise" data-videos="Ver vídeo|https://www.youtube.com/watch?v=g_BYB0R-4Ws"><div class="exercise-top"><input type="checkbox" aria-label="Concluir Dead bug"><div><div class="exercise-title">Dead bug</div><div class="exercise-detail">35 segundos</div></div></div></article>
+          <article class="exercise" data-videos="Farmer carry|https://www.youtube.com/watch?v=lLAw6fUccKA;Sandbag carry|https://www.youtube.com/watch?v=eMJ4g9eQ5vs"><div class="exercise-top"><input type="checkbox" aria-label="Concluir Caminhada carregando peso"><div><div class="exercise-title">Caminhada carregando peso</div><div class="exercise-detail">35 segundos</div></div></div></article>
+        </div>
+        <div class="note" style="margin: 0 10px 14px;">O kettlebell swing ficou fora nas primeiras 2-3 semanas. Use levantamento terra com kettlebell até ganhar técnica.</div>
+      </section>
+
+      <section class="panel progress">
+        <h2>Progressão</h2>
+        <details open><summary>Semanas 1-2</summary><p>Faça exatamente como está. Foque em técnica e consistência.</p></details>
+        <details><summary>Semanas 3-4</summary><p>Aumente 1-2 repetições por exercício, mantendo boa técnica.</p></details>
+        <details><summary>Semanas 5-6</summary><p>Use um peso um pouco maior em alguns exercícios.</p></details>
+        <details><summary>Semanas 7-8</summary><p>Reduza o descanso de 75 segundos para 60 segundos.</p></details>
+      </section>
+
+      <footer>Abra no Safari e use Compartilhar > Adicionar à Tela de Início para virar um atalho no iPhone.</footer>
+    </main>
+  </div>
+
+  <script>
+    const videoIdFromUrl = (url) => {
+      try {
+        const parsed = new URL(url);
+        if (parsed.hostname.includes("youtu.be")) return parsed.pathname.slice(1);
+        if (parsed.searchParams.has("v")) return parsed.searchParams.get("v");
+        const embedMatch = parsed.pathname.match(/\/embed\/([^/?]+)/);
+        return embedMatch ? embedMatch[1] : "";
+      } catch {
+        return "";
+      }
+    };
+
+    const buildVideoControls = () => {
+      document.querySelectorAll("[data-videos]").forEach((exercise) => {
+        const videos = document.createElement("div");
+        videos.className = "videos";
+
+        exercise.dataset.videos.split(";").forEach((entry) => {
+          const [label, url] = entry.split("|");
+          const videoId = videoIdFromUrl(url);
+
+          if (!videoId) {
+            const link = document.createElement("a");
+            link.className = "search-link";
+            link.href = url;
+            link.target = "_blank";
+            link.rel = "noreferrer";
+            link.textContent = label;
+            videos.append(link);
+            return;
+          }
+
+          const details = document.createElement("details");
+          details.className = "video-toggle";
+
+          const summary = document.createElement("summary");
+          summary.textContent = label === "Ver vídeo" ? "Mostrar vídeo" : `Mostrar vídeo: ${label}`;
+
+          const embed = document.createElement("div");
+          embed.className = "embed";
+          embed.dataset.videoId = videoId;
+          embed.dataset.title = label;
+
+          const youtubeLink = document.createElement("a");
+          youtubeLink.className = "youtube-open";
+          youtubeLink.href = url;
+          youtubeLink.target = "_blank";
+          youtubeLink.rel = "noreferrer";
+          youtubeLink.textContent = "Abrir no YouTube";
+
+          details.append(summary, embed, youtubeLink);
+          details.addEventListener("toggle", () => {
+            if (!details.open || embed.firstChild) return;
+            const iframe = document.createElement("iframe");
+            iframe.title = embed.dataset.title;
+            iframe.loading = "lazy";
+            iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+            iframe.allowFullscreen = true;
+            iframe.referrerPolicy = "strict-origin-when-cross-origin";
+            iframe.src = `https://www.youtube.com/embed/${embed.dataset.videoId}?playsinline=1&rel=0`;
+            embed.append(iframe);
+          });
+
+          videos.append(details);
+        });
+
+        exercise.append(videos);
+      });
+    };
+
+    const storage = {
+      get(key, fallback) {
+        try {
+          const value = localStorage.getItem(key);
+          return value ? JSON.parse(value) : fallback;
+        } catch {
+          return fallback;
+        }
+      },
+      set(key, value) {
+        try {
+          localStorage.setItem(key, JSON.stringify(value));
+        } catch {
+          return;
+        }
+      }
+    };
+
+    const getWeekKey = () => {
+      const now = new Date();
+      const date = new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()));
+      const day = date.getUTCDay() || 7;
+      date.setUTCDate(date.getUTCDate() + 4 - day);
+      const yearStart = new Date(Date.UTC(date.getUTCFullYear(), 0, 1));
+      const week = Math.ceil((((date - yearStart) / 86400000) + 1) / 7);
+      return `${date.getUTCFullYear()}-W${String(week).padStart(2, "0")}`;
+    };
+
+    const weekKey = getWeekKey();
+    const weeklyStorageKey = `personalTrainer.week.${weekKey}`;
+    const exerciseStorageKey = `personalTrainer.exercises.${weekKey}`;
+
+    const initTabs = () => {
+      const buttons = [...document.querySelectorAll("[data-tab]")];
+      const panels = [...document.querySelectorAll("[data-workout-panel]")];
+      const savedTab = storage.get("personalTrainer.activeTab", "treino-a");
+      const validTab = panels.some((panel) => panel.id === savedTab) ? savedTab : "treino-a";
+
+      const activate = (targetId) => {
+        buttons.forEach((button) => {
+          const active = button.dataset.tab === targetId;
+          button.classList.toggle("is-active", active);
+          button.setAttribute("aria-selected", String(active));
+        });
+        panels.forEach((panel) => {
+          panel.hidden = panel.id !== targetId;
+        });
+        storage.set("personalTrainer.activeTab", targetId);
+      };
+
+      buttons.forEach((button) => {
+        button.addEventListener("click", () => activate(button.dataset.tab));
+      });
+
+      activate(validTab);
+    };
+
+    const initWeeklyTracker = () => {
+      const weekLabel = document.getElementById("week-label");
+      const doneInputs = [...document.querySelectorAll("[data-week-done]")];
+      const resetButton = document.getElementById("reset-week");
+      const saved = storage.get(weeklyStorageKey, {});
+
+      if (weekLabel) {
+        weekLabel.textContent = `Progresso salvo neste aparelho: ${weekKey}`;
+      }
+
+      doneInputs.forEach((input) => {
+        input.checked = Boolean(saved[input.dataset.weekDone]);
+        input.addEventListener("change", () => {
+          const current = storage.get(weeklyStorageKey, {});
+          current[input.dataset.weekDone] = input.checked;
+          storage.set(weeklyStorageKey, current);
+        });
+      });
+
+      resetButton?.addEventListener("click", () => {
+        doneInputs.forEach((input) => {
+          input.checked = false;
+        });
+        storage.set(weeklyStorageKey, {});
+        storage.set(exerciseStorageKey, {});
+        document.querySelectorAll(".exercise input[type='checkbox']").forEach((input) => {
+          input.checked = false;
+        });
+      });
+    };
+
+    const initExercisePersistence = () => {
+      const saved = storage.get(exerciseStorageKey, {});
+      document.querySelectorAll("[data-workout-panel]").forEach((panel) => {
+        panel.querySelectorAll(".exercise input[type='checkbox']").forEach((input, index) => {
+          const key = `${panel.id}.${index}`;
+          input.checked = Boolean(saved[key]);
+          input.addEventListener("change", () => {
+            const current = storage.get(exerciseStorageKey, {});
+            current[key] = input.checked;
+            storage.set(exerciseStorageKey, current);
+          });
+        });
+      });
+    };
+
+    buildVideoControls();
+    initTabs();
+    initWeeklyTracker();
+    initExercisePersistence();
+  </script>
+</body>
+</html>
