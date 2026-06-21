@@ -7,9 +7,9 @@
   <meta name="apple-mobile-web-app-title" content="Treino" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
-  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png" />
-  <link rel="icon" type="image/svg+xml" href="assets/icon.svg" />
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v=20260621-2" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png?v=20260621-2" />
+  <link rel="icon" type="image/svg+xml" href="assets/icon.svg?v=20260621-2" />
   <title>Treino</title>
   <style>
     :root {
@@ -282,11 +282,12 @@
 
     .exercise {
       display: grid;
-      grid-template-columns: 34px 1fr;
+      grid-template-columns: 46px minmax(0, 1fr);
       grid-template-areas:
         "checks content"
         "checks videos";
-      gap: 8px;
+      column-gap: 10px;
+      row-gap: 8px;
       border: 1px solid var(--line);
       border-radius: var(--radius);
       padding: 12px;
@@ -303,21 +304,24 @@
     }
 
     input[type="checkbox"] {
-      width: 24px;
-      height: 24px;
-      margin: 1px 0 0;
+      width: 32px;
+      height: 32px;
+      margin: 0;
       accent-color: var(--accent);
     }
 
     .round-checks {
       display: grid;
-      gap: 5px;
+      justify-items: center;
+      gap: 6px;
       grid-area: checks;
       align-items: start;
+      padding-top: 1px;
     }
 
     .exercise-top > input[type="checkbox"] {
       grid-area: checks;
+      justify-self: center;
     }
 
     .exercise-top > div {
