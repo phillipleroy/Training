@@ -283,6 +283,9 @@
     .exercise {
       display: grid;
       grid-template-columns: 34px 1fr;
+      grid-template-areas:
+        "checks content"
+        "checks videos";
       gap: 8px;
       border: 1px solid var(--line);
       border-radius: var(--radius);
@@ -309,18 +312,16 @@
     .round-checks {
       display: grid;
       gap: 5px;
-      grid-column: 1;
-      grid-row: 1 / span 2;
+      grid-area: checks;
       align-items: start;
     }
 
     .exercise-top > input[type="checkbox"] {
-      grid-column: 1;
-      grid-row: 1 / span 2;
+      grid-area: checks;
     }
 
     .exercise-top > div {
-      grid-column: 2;
+      grid-area: content;
       min-width: 0;
     }
 
@@ -340,8 +341,8 @@
     .videos {
       display: grid;
       gap: 8px;
-      grid-column: 2;
-      padding: 4px 0 0;
+      grid-area: videos;
+      padding: 0;
     }
 
     .video-toggle {
