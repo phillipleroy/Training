@@ -281,8 +281,12 @@
     }
 
     .exercise {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      gap: 8px;
       border: 1px solid var(--line);
       border-radius: var(--radius);
+      padding: 12px;
       background: var(--surface-2);
       overflow: hidden;
     }
@@ -292,11 +296,7 @@
     }
 
     .exercise-top {
-      display: grid;
-      grid-template-columns: 34px 1fr;
-      gap: 8px;
-      align-items: start;
-      padding: 12px;
+      display: contents;
     }
 
     input[type="checkbox"] {
@@ -309,7 +309,19 @@
     .round-checks {
       display: grid;
       gap: 5px;
+      grid-column: 1;
+      grid-row: 1 / span 2;
       align-items: start;
+    }
+
+    .exercise-top > input[type="checkbox"] {
+      grid-column: 1;
+      grid-row: 1 / span 2;
+    }
+
+    .exercise-top > div {
+      grid-column: 2;
+      min-width: 0;
     }
 
     .exercise-title {
@@ -328,7 +340,8 @@
     .videos {
       display: grid;
       gap: 8px;
-      padding: 0 12px 12px 54px;
+      grid-column: 2;
+      padding: 4px 0 0;
     }
 
     .video-toggle {
