@@ -10,35 +10,30 @@
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png" />
   <link rel="icon" type="image/svg+xml" href="assets/icon.svg" />
-  <title>Treino 3x por semana</title>
+  <title>Treino</title>
   <style>
     :root {
-      color-scheme: dark;
-      --bg: #101820;
-      --page-bg:
-        linear-gradient(135deg, rgba(124,207,159,0.16), transparent 32%),
-        linear-gradient(220deg, rgba(110,198,255,0.12), transparent 34%),
-        var(--bg);
-      --surface: #17232d;
-      --surface-2: #20303d;
-      --surface-3: #273946;
-      --header-bg: linear-gradient(90deg, rgba(124,207,159,0.12), rgba(255,209,102,0.08)), var(--surface);
-      --chrome-bg: rgba(16,24,32,0.9);
-      --text: #f6f7f2;
-      --muted: #b7c2c4;
-      --soft: #d7ded8;
-      --line: rgba(255,255,255,0.12);
-      --accent: #7ccf9f;
-      --accent-2: #ffd166;
-      --accent-3: #6ec6ff;
-      --danger: #ff9f9f;
-      --note-bg: rgba(255,209,102,0.12);
-      --note-border: rgba(255,209,102,0.36);
-      --note-text: #fff2c2;
-      --danger-bg: rgba(255,159,159,0.12);
-      --danger-border: rgba(255,159,159,0.34);
-      --danger-text: #ffe2e2;
-      --shadow: 0 18px 50px rgba(0,0,0,0.28);
+      color-scheme: light;
+      --bg: #f7f8f6;
+      --surface: #ffffff;
+      --surface-2: #f2f4f1;
+      --surface-3: #eaeee9;
+      --chrome-bg: rgba(247,248,246,0.92);
+      --text: #17211d;
+      --muted: #69736f;
+      --soft: #35443f;
+      --line: rgba(23,33,29,0.12);
+      --accent: #23866a;
+      --accent-soft: #e6f2ee;
+      --accent-2: #a45d00;
+      --accent-3: #1a73e8;
+      --note-bg: #fff6d8;
+      --note-border: #efd07b;
+      --note-text: #573f05;
+      --danger-bg: #ffe7e7;
+      --danger-border: #eba5a5;
+      --danger-text: #711f1f;
+      --shadow: none;
       --radius: 8px;
     }
 
@@ -49,7 +44,7 @@
       margin: 0;
       min-height: 100vh;
       font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Arial, sans-serif;
-      background: var(--page-bg);
+      background: var(--bg);
       color: var(--text);
       line-height: 1.45;
       -webkit-font-smoothing: antialiased;
@@ -69,7 +64,7 @@
       top: 0;
       z-index: 10;
       margin: 0 -14px;
-      padding: calc(16px + env(safe-area-inset-top)) 14px 12px;
+      padding: calc(8px + env(safe-area-inset-top)) 14px 10px;
       border-bottom: 1px solid var(--line);
       background: var(--chrome-bg);
       backdrop-filter: blur(18px);
@@ -77,40 +72,24 @@
     }
 
     .hero {
-      display: grid;
-      gap: 12px;
-      padding: 18px 0 12px;
-    }
-
-    h1 {
-      margin: 0;
-      max-width: 12ch;
-      font-size: 40px;
-      line-height: 0.96;
-      letter-spacing: 0;
-    }
-
-    .subtitle {
-      margin: 0;
-      color: var(--soft);
-      font-size: 15px;
+      padding: 4px 0;
     }
 
     .today {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
+      gap: 6px;
     }
 
     .nav-link {
       appearance: none;
       display: grid;
-      min-height: 54px;
+      min-height: 46px;
       place-items: center;
       gap: 2px;
       border: 1px solid var(--line);
       border-radius: var(--radius);
-      background: rgba(255,255,255,0.06);
+      background: var(--surface);
       color: var(--text);
       text-decoration: none;
       font-weight: 800;
@@ -122,11 +101,11 @@
 
     .nav-link.is-active {
       border-color: var(--accent);
-      background: var(--accent);
-      color: #071512;
+      background: var(--accent-soft);
+      color: var(--accent);
     }
 
-    .nav-link.is-active span { color: rgba(7,21,18,0.72); }
+    .nav-link.is-active span { color: var(--accent); }
 
     .nav-link span {
       color: var(--muted);
@@ -137,8 +116,8 @@
 
     main {
       display: grid;
-      gap: 14px;
-      padding-top: 14px;
+      gap: 10px;
+      padding-top: 10px;
     }
 
     .panel,
@@ -150,11 +129,11 @@
       overflow: hidden;
     }
 
-    .panel { padding: 16px; }
+    .panel { padding: 14px; }
 
     .workout-header {
-      padding: 16px;
-      background: var(--header-bg);
+      padding: 14px 14px 12px;
+      background: var(--surface);
       border-bottom: 1px solid var(--line);
     }
 
@@ -162,14 +141,14 @@
 
     h2 {
       margin: 0 0 8px;
-      font-size: 23px;
+      font-size: 21px;
       line-height: 1.1;
       letter-spacing: 0;
     }
 
     h3 {
       margin: 0;
-      padding: 18px 16px 8px;
+      padding: 16px 14px 6px;
       color: var(--accent-2);
       font-size: 14px;
       letter-spacing: 0;
@@ -183,7 +162,7 @@
       display: flex;
       gap: 7px;
       flex-wrap: wrap;
-      margin: 10px 0 0;
+      margin: 8px 0 0;
     }
 
     .pill {
@@ -194,7 +173,7 @@
       border-radius: 999px;
       padding: 5px 10px;
       color: var(--soft);
-      background: rgba(255,255,255,0.05);
+      background: var(--surface-2);
       font-size: 12px;
       font-weight: 700;
       white-space: nowrap;
@@ -218,7 +197,7 @@
 
     .week-panel {
       display: grid;
-      gap: 12px;
+      gap: 10px;
     }
 
     .week-top {
@@ -228,10 +207,12 @@
       gap: 12px;
     }
 
+    .week-top h2 { margin-bottom: 2px; }
+
     .week-label {
       margin: 2px 0 0;
       color: var(--muted);
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 700;
     }
 
@@ -244,10 +225,10 @@
     .week-check {
       display: grid;
       gap: 8px;
-      min-height: 92px;
+      min-height: 58px;
       border: 1px solid var(--line);
       border-radius: var(--radius);
-      padding: 12px;
+      padding: 10px;
       background: var(--surface-2);
       color: var(--text);
       font-weight: 850;
@@ -296,10 +277,14 @@
     }
 
     .exercise {
-      border: 1px solid rgba(255,255,255,0.1);
+      border: 1px solid var(--line);
       border-radius: var(--radius);
       background: var(--surface-2);
       overflow: hidden;
+    }
+
+    .exercise:has(input:checked) {
+      background: color-mix(in srgb, var(--accent) 10%, var(--surface-2));
     }
 
     .exercise-top {
@@ -337,7 +322,7 @@
     }
 
     .video-toggle {
-      border: 1px solid rgba(255,255,255,0.12);
+      border: 1px solid var(--line);
       border-radius: var(--radius);
       background: var(--surface-3);
       overflow: hidden;
@@ -389,10 +374,10 @@
 
     .youtube-open {
       display: block;
-      border-top: 1px solid rgba(255,255,255,0.1);
+      border-top: 1px solid var(--line);
       padding: 10px 12px;
       color: var(--accent-3);
-      background: rgba(0,0,0,0.12);
+      background: transparent;
       font-size: 13px;
       font-weight: 850;
       text-decoration: none;
@@ -403,7 +388,7 @@
       align-items: center;
       min-height: 42px;
       width: fit-content;
-      border: 1px solid rgba(255,255,255,0.12);
+      border: 1px solid var(--line);
       border-radius: var(--radius);
       padding: 9px 12px;
       background: var(--surface-3);
@@ -428,63 +413,35 @@
 
     details.tip p { padding: 0 12px 12px; color: var(--soft); }
 
-    .progress details {
-      border-top: 1px solid var(--line);
-      padding: 12px 0;
-    }
-
-    .progress details:first-of-type { border-top: 0; }
-    .progress summary { cursor: pointer; font-weight: 850; }
-    .progress p { margin-top: 8px; color: var(--soft); }
-
-    footer {
-      color: var(--muted);
-      font-size: 12px;
-      text-align: center;
-      padding: 4px 8px 16px;
-    }
-
     @media (min-width: 700px) {
       .app-shell { padding-inline: 20px; }
       header { margin-inline: -20px; padding-inline: 20px; }
-      .hero {
-        grid-template-columns: 1fr 340px;
-        align-items: end;
-      }
-      h1 { font-size: 52px; }
-      .today { align-self: end; }
       .panel, .workout { border-radius: 8px; }
     }
 
-    @media (prefers-color-scheme: light) {
+    @media (prefers-color-scheme: dark) {
       :root {
-        color-scheme: light;
-        --bg: #f6f8f7;
-        --page-bg:
-          linear-gradient(135deg, rgba(28,132,102,0.12), transparent 34%),
-          linear-gradient(225deg, rgba(26,115,232,0.09), transparent 34%),
-          #f6f8f7;
-        --surface: #ffffff;
-        --surface-2: #f1f5f4;
-        --surface-3: #e7f0ed;
-        --header-bg: linear-gradient(90deg, #eaf6f1, #eef4fb);
-        --chrome-bg: rgba(246,248,247,0.9);
-        --text: #172321;
-        --muted: #667571;
-        --soft: #334340;
-        --line: rgba(23,35,33,0.13);
-        --accent: #23866a;
-        --accent-2: #b66b00;
-        --accent-3: #1a73e8;
-        --note-bg: #fff6d8;
-        --note-border: #efd07b;
-        --note-text: #573f05;
-        --danger-bg: #ffe7e7;
-        --danger-border: #eba5a5;
-        --danger-text: #711f1f;
-        --shadow: 0 14px 34px rgba(29,45,43,0.12);
+        color-scheme: dark;
+        --bg: #111715;
+        --surface: #18211e;
+        --surface-2: #202b27;
+        --surface-3: #27332f;
+        --chrome-bg: rgba(17,23,21,0.92);
+        --text: #eef4f0;
+        --muted: #a8b3ae;
+        --soft: #d6ded9;
+        --line: rgba(238,244,240,0.12);
+        --accent: #7ccf9f;
+        --accent-soft: rgba(124,207,159,0.14);
+        --accent-2: #ffd166;
+        --accent-3: #8bc8ff;
+        --note-bg: rgba(255,209,102,0.12);
+        --note-border: rgba(255,209,102,0.32);
+        --note-text: #fff2c2;
+        --danger-bg: rgba(255,159,159,0.12);
+        --danger-border: rgba(255,159,159,0.3);
+        --danger-text: #ffe2e2;
       }
-      .embed { background: #dbe4e0; }
     }
   </style>
 </head>
@@ -492,10 +449,6 @@
   <div class="app-shell">
     <header>
       <div class="hero">
-        <div>
-          <h1>Treino 3x por semana</h1>
-          <p class="subtitle">Plano rápido, de 25 a 30 min, com vídeos dobráveis para consultar no iPhone.</p>
-        </div>
         <nav class="today" aria-label="Navegação rápida">
           <button class="nav-link is-active" type="button" data-tab="treino-a" aria-controls="treino-a" aria-selected="true">A <span>Base</span></button>
           <button class="nav-link" type="button" data-tab="treino-b" aria-controls="treino-b" aria-selected="false">B <span>Pernas</span></button>
@@ -505,18 +458,6 @@
     </header>
 
     <main>
-      <section class="panel">
-        <h2>Como usar</h2>
-        <p>Faça um treino por dia de treino. Exemplo: segunda A, quarta B, sexta ou sábado C. No início, evite fazer os 3 dias seguidos.</p>
-        <div class="meta">
-          <span class="pill">3x por semana</span>
-          <span class="pill">25-30 min</span>
-          <span class="pill">Descanso: 60-75s</span>
-        </div>
-        <div class="note">Intensidade ideal: termine cada série sentindo que ainda conseguiria fazer 2 ou 3 repetições a mais.</div>
-        <div class="note danger">Pare se sentir dor aguda no joelho, lombar ou ombro. Fadiga muscular é normal; dor articular não.</div>
-      </section>
-
       <section class="panel week-panel" aria-labelledby="week-title">
         <div class="week-top">
           <div>
@@ -614,15 +555,6 @@
         <div class="note" style="margin: 0 10px 14px;">O kettlebell swing ficou fora nas primeiras 2-3 semanas. Use levantamento terra com kettlebell até ganhar técnica.</div>
       </section>
 
-      <section class="panel progress">
-        <h2>Progressão</h2>
-        <details open><summary>Semanas 1-2</summary><p>Faça exatamente como está. Foque em técnica e consistência.</p></details>
-        <details><summary>Semanas 3-4</summary><p>Aumente 1-2 repetições por exercício, mantendo boa técnica.</p></details>
-        <details><summary>Semanas 5-6</summary><p>Use um peso um pouco maior em alguns exercícios.</p></details>
-        <details><summary>Semanas 7-8</summary><p>Reduza o descanso de 75 segundos para 60 segundos.</p></details>
-      </section>
-
-      <footer>Abra no Safari e use Compartilhar > Adicionar à Tela de Início para virar um atalho no iPhone.</footer>
     </main>
   </div>
 
