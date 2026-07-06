@@ -81,7 +81,7 @@
 
     .today {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(auto-fit, minmax(92px, 1fr));
       gap: 6px;
     }
 
@@ -222,7 +222,7 @@
 
     .week-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(auto-fit, minmax(112px, 1fr));
       gap: 8px;
     }
 
@@ -487,6 +487,8 @@
         <label class="week-check"><input type="checkbox" data-week-done="treino-a">Treino A <span>Base</span></label>
         <label class="week-check"><input type="checkbox" data-week-done="treino-b">Treino B <span>Pernas</span></label>
         <label class="week-check"><input type="checkbox" data-week-done="treino-c">Treino C <span>Fôlego</span></label>
+        <label class="week-check"><input type="checkbox" data-week-done="treino-d">Treino D <span>Máquinas</span></label>
+        <label class="week-check"><input type="checkbox" data-week-done="treino-e">Treino E <span>Cabos</span></label>
       </div>
     </section>
 
@@ -496,6 +498,8 @@
           <button class="nav-link is-active" type="button" data-tab="treino-a" aria-controls="treino-a" aria-selected="true">A <span>Base</span></button>
           <button class="nav-link" type="button" data-tab="treino-b" aria-controls="treino-b" aria-selected="false">B <span>Pernas</span></button>
           <button class="nav-link" type="button" data-tab="treino-c" aria-controls="treino-c" aria-selected="false">C <span>Fôlego</span></button>
+          <button class="nav-link" type="button" data-tab="treino-d" aria-controls="treino-d" aria-selected="false">D <span>Máquinas</span></button>
+          <button class="nav-link" type="button" data-tab="treino-e" aria-controls="treino-e" aria-selected="false">E <span>Cabos</span></button>
         </nav>
       </div>
     </header>
@@ -583,6 +587,65 @@
         <div class="note" style="margin: 0 10px 14px;">O kettlebell swing ficou fora nas primeiras 2-3 semanas. Use levantamento terra com kettlebell até ganhar técnica.</div>
       </section>
 
+      <section id="treino-d" class="workout" data-workout-panel hidden>
+        <div class="workout-header">
+          <h2>Treino D</h2>
+          <p>Extra de academia: força com máquinas.</p>
+          <div class="meta"><span class="pill">45-55 min</span><span class="pill">Corpo inteiro</span><span class="pill">RPE 7</span></div>
+        </div>
+
+        <h3>Aquecimento - 5 min</h3>
+        <p class="small">Suba a intensidade aos poucos, sem cansar antes do treino.</p>
+        <div class="exercise-list" data-rounds="1">
+          <article class="exercise"><div class="exercise-top"><input type="checkbox" aria-label="Concluir Esteira inclinada"><div><div class="exercise-title">Esteira inclinada ou bicicleta</div><div class="exercise-detail">5 minutos, de fácil para suor leve</div></div></div></article>
+        </div>
+
+        <h3>Principal - 4 séries</h3>
+        <p class="small">Descanse 60-90 segundos. A última repetição deve ser firme, sem perder postura.</p>
+        <div class="exercise-list" data-rounds="4">
+          <article class="exercise"><div class="exercise-top"><input type="checkbox" aria-label="Concluir Leg press"><div><div class="exercise-title">Leg press</div><div class="exercise-detail">8 repetições. Desça controlado e empurre forte.</div></div></div></article>
+          <article class="exercise"><div class="exercise-top"><input type="checkbox" aria-label="Concluir Supino máquina"><div><div class="exercise-title">Supino máquina</div><div class="exercise-detail">8-10 repetições. Ombros baixos, peito aberto.</div></div></div></article>
+          <article class="exercise"><div class="exercise-top"><input type="checkbox" aria-label="Concluir Remada sentada"><div><div class="exercise-title">Remada sentada no cabo ou máquina</div><div class="exercise-detail">10 repetições. Segure 1 segundo com cotovelos para trás.</div></div></div></article>
+        </div>
+
+        <h3>Acessórios - 3 séries</h3>
+        <div class="exercise-list" data-rounds="3">
+          <article class="exercise"><div class="exercise-top"><input type="checkbox" aria-label="Concluir Mesa flexora"><div><div class="exercise-title">Mesa flexora</div><div class="exercise-detail">12 repetições. Controle total na volta.</div></div></div></article>
+          <article class="exercise"><div class="exercise-top"><input type="checkbox" aria-label="Concluir Elevação de panturrilha"><div><div class="exercise-title">Elevação de panturrilha</div><div class="exercise-detail">15 repetições. Pausa curta no topo.</div></div></div></article>
+          <article class="exercise"><div class="exercise-top"><input type="checkbox" aria-label="Concluir Prancha com toque no ombro"><div><div class="exercise-title">Prancha com toque no ombro</div><div class="exercise-detail">20 toques no total. Quadril parado.</div></div></div></article>
+        </div>
+        <div class="note" style="margin: 0 10px 14px;">Regra do dia: aumente carga só se as duas últimas repetições ainda parecerem limpas.</div>
+      </section>
+
+      <section id="treino-e" class="workout" data-workout-panel hidden>
+        <div class="workout-header">
+          <h2>Treino E</h2>
+          <p>Extra de academia: halteres, cabos e condicionamento.</p>
+          <div class="meta"><span class="pill">40-50 min</span><span class="pill">Ritmo + coordenação</span><span class="pill">Sem pressa</span></div>
+        </div>
+
+        <h3>Aquecimento - 8 min</h3>
+        <p class="small">Faça 5 minutos fácil, depois 3 tiros de 20 segundos forte e 40 segundos leve.</p>
+        <div class="exercise-list" data-rounds="1">
+          <article class="exercise"><div class="exercise-top"><input type="checkbox" aria-label="Concluir Bike ou remo"><div><div class="exercise-title">Bike, remo ou transport</div><div class="exercise-detail">8 minutos no total, terminando aquecido e respirando bem.</div></div></div></article>
+        </div>
+
+        <h3>Força - 3 séries</h3>
+        <p class="small">Descanse 60-75 segundos entre exercícios.</p>
+        <div class="exercise-list" data-rounds="3">
+          <article class="exercise"><div class="exercise-top"><input type="checkbox" aria-label="Concluir Goblet squat"><div><div class="exercise-title">Goblet squat com halter</div><div class="exercise-detail">10 repetições. Peito alto, joelhos acompanham os pés.</div></div></div></article>
+          <article class="exercise"><div class="exercise-top"><input type="checkbox" aria-label="Concluir Supino com halteres"><div><div class="exercise-title">Supino com halteres</div><div class="exercise-detail">8-10 repetições. Pare com 1 repetição boa sobrando.</div></div></div></article>
+          <article class="exercise"><div class="exercise-top"><input type="checkbox" aria-label="Concluir Pull-through"><div><div class="exercise-title">Cable pull-through</div><div class="exercise-detail">12 repetições. Dobre no quadril e trave glúteos no topo.</div></div></div></article>
+          <article class="exercise"><div class="exercise-top"><input type="checkbox" aria-label="Concluir Press e remada no cabo"><div><div class="exercise-title">Press unilateral + remada unilateral no cabo</div><div class="exercise-detail">8 press + 8 remadas por lado. Tronco firme.</div></div></div></article>
+        </div>
+
+        <h3>Final - 8 min</h3>
+        <div class="exercise-list" data-rounds="1">
+          <article class="exercise"><div class="exercise-top"><input type="checkbox" aria-label="Concluir finalizador"><div><div class="exercise-title">Sled push, farmer carry ou caminhada inclinada</div><div class="exercise-detail">8 minutos contínuos. Escolha o que estiver livre e mantenha controle.</div></div></div></article>
+        </div>
+        <div class="note" style="margin: 0 10px 14px;">Este treino deve parecer atlético, não caótico. Repetições lisas valem mais que carga alta.</div>
+      </section>
+
     </main>
   </div>
 
@@ -658,6 +721,8 @@
     };
 
     const getRoundCountForList = (list) => {
+      if (list.dataset.rounds) return Number(list.dataset.rounds);
+
       let node = list.previousElementSibling;
       while (node && node.tagName !== "H3") {
         const text = node.textContent || "";
